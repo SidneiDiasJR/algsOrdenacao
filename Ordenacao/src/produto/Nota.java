@@ -1,12 +1,12 @@
 package produto;
 
 
-public class Produto {
+public class Nota {
 	private String nome;
 	private double preco;
 	
-	Produto(){}
-	Produto(String nome, double preco){
+	Nota(){}
+	Nota(String nome, double preco){
 		setNome(nome);
 		setPreco(preco);
 	}

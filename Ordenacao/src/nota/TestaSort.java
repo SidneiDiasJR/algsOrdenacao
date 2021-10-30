@@ -9,17 +9,17 @@ public class TestaSort {
 		//insertionSort(notas, quantidadeElementos);
 		//selectionSort(notas, quantidadeElementos);
 		//mergeSort(notas, 0, quantidadeElementos);
-		QuickSort(notas, 0, quantidadeElementos);
+		quickSort(notas, 0, quantidadeElementos);
 		imprimirLista(notas);
 		// imprimirLista(notas);
 	}
 
-	private static void QuickSort(Nota[] notas, int de, int ate) {
+	private static void quickSort(Nota[] notas, int de, int ate) {
 		int quantidadeElementos = ate - de;
 		if (quantidadeElementos > 1) {
 			int posicaoPivo = particionar(notas, de, ate);
-			QuickSort(notas, de, posicaoPivo);
-			QuickSort(notas, posicaoPivo + 1, ate);
+			quickSort(notas, de, posicaoPivo);
+			quickSort(notas, posicaoPivo + 1, ate);
 		}
 	}
 

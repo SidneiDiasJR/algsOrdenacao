@@ -2,9 +2,9 @@ package nota;
 
 public class Nota {
 	private String aluno;
-	private double valor;
+	private int valor;
 	
-	public Nota(String aluno, double valor) {
+	public Nota(String aluno, int valor) {
 		this.aluno = aluno;
 		this.valor = valor;
 	}
@@ -13,7 +13,7 @@ public class Nota {
 		return this.aluno;
 	}
 	
-	public double getValor() {
+	public int getValor() {
 		return this.valor;
 	}
 	

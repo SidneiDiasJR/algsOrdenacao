@@ -1,19 +1,49 @@
 package nota;
 
-import java.text.DecimalFormat;
-import java.util.Random;
-
 public class TestaSort {
 	public static void main(String[] args) {
-		int quantidadeElementos = 100000;
+		int quantidadeElementos = 200000;
 		Nota[] notas = new Nota[quantidadeElementos];
 		preencherLista(notas, "A", quantidadeElementos);
-		imprimirLista(notas);
+		System.out.println("Ordenando...");
 		//insertionSort(notas, quantidadeElementos);
 		//selectionSort(notas, quantidadeElementos);
-		mergeSort(notas, 0, quantidadeElementos);
+		//mergeSort(notas, 0, quantidadeElementos);
+		QuickSort(notas, 0, quantidadeElementos);
 		imprimirLista(notas);
-	}	
+		// imprimirLista(notas);
+	}
+
+	private static void QuickSort(Nota[] notas, int de, int ate) {
+		int quantidadeElementos = ate - de;
+		if (quantidadeElementos > 1) {
+			int posicaoPivo = particionar(notas, de, ate);
+			QuickSort(notas, de, posicaoPivo);
+			QuickSort(notas, posicaoPivo + 1, ate);
+		}
+	}
+
+	private static int particionar(Nota[] notas, int inicio, int termino) {
+		int menores = 0;
+		Nota pivo = notas[termino - 1];
+		for (int analisando = 0; analisando < termino - 1; analisando++) {
+			Nota atual = notas[analisando];
+			if (atual.getValor() <= pivo.getValor()) {
+				trocar(notas, analisando, menores);
+				menores++;
+			}
+		}
+		trocar(notas, termino - 1, menores);
+		return menores;
+	}
+
+	private static void trocar(Nota[] notas, int de, int para) {
+		Nota nota1 = notas[de];
+		Nota nota2 = notas[para];
+		notas[de] = nota2;
+		notas[para] = nota1;
+	}
+
 	private static void mergeSort(Nota[] notas, int inicio, int termino) {
 		int quantidade = termino - inicio;
 		if (quantidade > 1) {
@@ -55,24 +85,24 @@ public class TestaSort {
 			notas[contador + inicio] = temporario[contador];
 		}
 	}
-	
+
 	public static void selectionSort(Nota[] notas, int quantidadeElementos) {
 		for (int atual = 0; atual < quantidadeElementos - 1; atual++) {
 			int menor = buscarMenor(notas, atual, quantidadeElementos);
 			trocarElementos(notas, atual, menor);
 		}
 	}
-	
-	public static void insertionSort(Nota [] notas, int quantidadeElementos) {
-		for(int atual = 1; atual < quantidadeElementos; atual++) {
+
+	public static void insertionSort(Nota[] notas, int quantidadeElementos) {
+		for (int atual = 1; atual < quantidadeElementos; atual++) {
 			int analise = atual;
-			while(analise > 0 && notas[analise].getValor() < notas[analise-1].getValor() ) {
-				trocarElementos(notas, analise, analise-1);
+			while (analise > 0 && notas[analise].getValor() < notas[analise - 1].getValor()) {
+				trocarElementos(notas, analise, analise - 1);
 				analise--;
 			}
 		}
 	}
-	
+
 	public static int buscarMenor(Nota[] notas, int inicio, int termino) {
 		int menor = inicio;
 		for (int atual = inicio; atual < termino; atual++) {
@@ -81,7 +111,7 @@ public class TestaSort {
 		}
 		return menor;
 	}
-	
+
 	public static void trocarElementos(Nota[] notas, int primeira, int segunda) {
 		Nota primeiraNota = notas[primeira];
 		Nota segundaNota = notas[segunda];
@@ -90,23 +120,20 @@ public class TestaSort {
 	}
 
 	public static void imprimirLista(Nota[] notas) {
-		System.out.println("\n");
 		for (Nota nota : notas) {
 			System.out.println(nota);
 		}
+		System.out.println("\n");
 	}
 
-	public static double gerarNota(int limitador) {
-		Random rand = new Random();
-		DecimalFormat df = new DecimalFormat("#0.0");
-		double notaRandom = rand.nextDouble() * limitador;
-		notaRandom = Double.parseDouble(df.format(notaRandom));
-		return notaRandom;
+	public static int gerarNumero(int limitador) {
+		int numRandom = (int)(Math.random()*limitador);
+		return numRandom;
 	}
 
 	public static void preencherLista(Nota[] notas, String nomeGenerico, int quantidadeElementos) {
 		for (int i = 0; i < quantidadeElementos; i++) {
-			double notaRandom = gerarNota(10);
+			int notaRandom = gerarNumero(quantidadeElementos);
 			notas[i] = new Nota(nomeGenerico + i, notaRandom);
 		}
 	}

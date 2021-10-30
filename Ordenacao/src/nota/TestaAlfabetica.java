@@ -4,12 +4,18 @@ public class TestaAlfabetica {
 	public static void main(String[] args) {
 		String[] nomes = {"David", "Dário", "Gabriel", "Luan", "Oldevan" ,"Sidnei", "Fabiana", "Fernanda", "Layane", "Rubi"};
 		String[] nomes2 = {"Razor", "Xiao", "Klee", "Kazuha", "Xiangling", "Bennett", "Raiden", "Sara"};
-		imprimirNomes(nomes);
-		intercalar(nomes, 0, 6, 10);
+		quickSort(nomes, 0, nomes.length);
+		quickSort(nomes2, 0, nomes2.length);
 		imprimirNomes(nomes);
 		imprimirNomes(nomes2);
-		mergeSort(nomes2, 0, 8);
-		imprimirNomes(nomes2);
+	}
+	public static void quickSort(String[] nomes, int de, int ate) {
+		int quantidadeElementos = ate-de;
+		if(quantidadeElementos > 1) {
+			int posicaoPivo = particionar(nomes, de, ate);
+			quickSort(nomes, de, posicaoPivo);
+			quickSort(nomes, posicaoPivo+1, ate);
+		}
 	}
 	public static void mergeSort(String[] nomes, int inicio, int termino) {
 		int quantidadeElementos = termino - inicio;
@@ -20,6 +26,27 @@ public class TestaAlfabetica {
 			intercalar(nomes, inicio, meio, termino);
 		}
 	}
+	public static int particionar(String[] nomes, int inicio, int termino) {
+		int menores = 0;
+		String pivo = nomes[termino-1];
+		for(int analise = 0; analise < termino-1; analise++) {
+			String atual = nomes[analise];
+			if(atual.compareTo(pivo) < 0) {
+				trocar(nomes, analise, menores);
+				menores++;
+			}
+		}
+		trocar(nomes, termino-1, menores);
+		return menores;
+	}
+	
+	public static void trocar(String[] nomes, int de, int para) {
+		String nome1 = nomes[de];
+		String nome2 = nomes[para];
+		nomes[de] = nome2;
+		nomes[para] = nome1;
+	}
+	
 	public static void intercalar(String[] nomes, int inicio, int meio, int termino) {
 		int atual = 0;
 		int atual1 = inicio;

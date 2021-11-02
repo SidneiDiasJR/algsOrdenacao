@@ -4,10 +4,29 @@ public class TestaAlfabetica {
 	public static void main(String[] args) {
 		String[] nomes = {"David", "Dário", "Gabriel", "Luan", "Oldevan" ,"Sidnei", "Fabiana", "Fernanda", "Layane", "Rubi"};
 		String[] nomes2 = {"Razor", "Xiao", "Klee", "Kazuha", "Xiangling", "Bennett", "Raiden", "Sara"};
+		int indice = buscar(nomes, "Dário");
 		quickSort(nomes, 0, nomes.length);
-		quickSort(nomes2, 0, nomes2.length);
 		imprimirNomes(nomes);
-		imprimirNomes(nomes2);
+		/*if(indice >= 0)
+			System.out.println("Encontrei o nome no indice " + indice);
+		else
+			System.out.println("Não encontrei o nome na lista.");*/
+	}
+	
+	public static int buscar(String[] nomes, int de, int ate, String busca) {
+		if(de > ate)
+			return -1;
+		int meio = (de+ate)/2;
+		String nome = nomes[meio];
+		if(busca.compareTo(nome) == 0)
+			return meio;
+		if(busca.compareTo(nome) < 0)
+			return buscar(nomes, de, meio-1, busca);
+		return buscar(nomes, meio+1, ate, busca);
+	}
+	
+	public static int buscar(String[] nomes, String busca) {
+		return buscar(nomes, 0, nomes.length-1, busca);
 	}
 	public static void quickSort(String[] nomes, int de, int ate) {
 		int quantidadeElementos = ate-de;
